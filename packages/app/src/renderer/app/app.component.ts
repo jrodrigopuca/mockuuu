@@ -197,7 +197,7 @@ export class AppComponent implements OnInit {
     this.activeEnvironment$ = this.store.selectActiveEnvironment().pipe(
       tap((activeEnvironment) => {
         this.title.setTitle(
-          `${environment.production ? '' : ' [DEV]'}Mockoon${
+          `${environment.production ? '' : ' [DEV]'}Mockooo${
             activeEnvironment ? ' - ' + activeEnvironment.name : ''
           }`
         );
