@@ -4,6 +4,7 @@
 
 Mockooo is a personal fork of [Mockoon](https://mockoon.com), the open-source API mocking tool. It's used and built locally, not distributed or published under the Mockoon name/branding.
 
+
 All credit for the original design, features, and codebase goes to the [Mockoon project](https://github.com/mockoon/mockoon) and its maintainers. This fork is released under the same [MIT license](./LICENSE.md).
 
 ## What it does
