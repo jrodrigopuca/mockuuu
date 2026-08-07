@@ -47,6 +47,7 @@
     "start:2": "electron . --remote-debugging-port=8889 --data-folder=./tmp2 --enable-dev-tools",
     "start:3": "electron . --remote-debugging-port=8890 --data-folder=./tmp3 --enable-dev-tools",
     "package:win": "npm run clean-packages && electron-builder --publish never --config ./build-configs/electron-builder.win.js",
+    "package:win:unsigned": "npm run clean-packages && electron-builder --publish never --config ./build-configs/electron-builder.win-unsigned.js",
     "package:win:appx": "npm run clean-packages && electron-builder --publish never --config ./build-configs/electron-builder.win-appx.js",
     "package:linux": "npm run clean-packages && electron-builder --publish never --config ./build-configs/electron-builder.linux.js",
     "package:mac": "npm run clean-packages && electron-builder --publish never --config ./build-configs/electron-builder.mac.js",
