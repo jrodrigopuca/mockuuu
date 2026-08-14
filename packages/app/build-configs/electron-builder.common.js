@@ -4,7 +4,7 @@
  */
 const config = {
   appId: 'com.mockoon.app',
-  productName: 'Mockoon',
+  productName: 'Mockuuu',
   extraMetadata: { name: 'mockoon' },
   directories: {
     output: 'packages',

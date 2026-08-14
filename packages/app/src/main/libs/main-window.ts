@@ -45,7 +45,7 @@ export const initMainWindow = () => {
     minimizable: true,
     width: mainWindowState.width,
     height: mainWindowState.height,
-    title: 'Mockooo',
+    title: 'Mockuuu',
     backgroundColor: '#252830',
     icon: pathJoin(
       __dirname,
