@@ -57,7 +57,7 @@ import { UIService } from 'src/renderer/app/services/ui.service';
 import { UserService } from 'src/renderer/app/services/user.service';
 import { Store } from 'src/renderer/app/stores/store';
 import { Config } from 'src/renderer/config';
-import { environment } from 'src/renderer/environments/environment';
+import { environment as env } from 'src/renderer/environments/environment';
 import {
   EnvironmentsCategories,
   RecentLocalEnvironment,
@@ -134,10 +134,10 @@ export class EnvironmentsMenuComponent {
       'We will soon not support your Mockoon version anymore. Please update.'
   };
   public commonDropdownMenuItems: DropdownMenuItem[] = [
-    // Mockoon Cloud is disabled in this fork (see environment.cloudEnabled) —
+    // Mockoon Cloud is disabled in this fork (see env.cloudEnabled) —
     // omit the "Duplicate to the cloud" entry point entirely, it's shared by
     // both the local and cloud environment dropdown menus.
-    ...(environment.cloudEnabled
+    ...(env.cloudEnabled
       ? [
           {
             label: this.isWeb ? 'Duplicate' : 'Duplicate to the cloud',
@@ -560,10 +560,10 @@ export class EnvironmentsMenuComponent {
       map((user) => user && user.plan !== 'FREE')
     );
 
-    // Mockoon Cloud is disabled in this fork (see environment.cloudEnabled) —
+    // Mockoon Cloud is disabled in this fork (see env.cloudEnabled) —
     // omit the cloud category/tab entirely so no cloud UI (add menu, cloud
     // environment list, login/subscribe CTA, instances footer) ever renders.
-    this.categories = environment.cloudEnabled
+    this.categories = env.cloudEnabled
       ? [
           {
             id: 'cloud',

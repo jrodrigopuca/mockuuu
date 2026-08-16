@@ -16,7 +16,7 @@ import { UIService } from 'src/renderer/app/services/ui.service';
 import { clearLogsAction } from 'src/renderer/app/stores/actions';
 import { Store } from 'src/renderer/app/stores/store';
 import { Config } from 'src/renderer/config';
-import { environment } from 'src/renderer/environments/environment';
+import { environment as env } from 'src/renderer/environments/environment';
 
 @Service()
 export class CommandPaletteService {
@@ -363,7 +363,7 @@ export class CommandPaletteService {
         },
         score: 1,
         enabled:
-          environment.cloudEnabled && isUserConnectedAndPaid && isSyncConnected
+          env.cloudEnabled && isUserConnectedAndPaid && isSyncConnected
       },
       {
         id: 'VIEW_SELECT_PREVIOUS_ENVIRONMENT',
@@ -629,9 +629,9 @@ export class CommandPaletteService {
         score: 1,
         // Templates modal's only data source (JSON Templates list) is the
         // Mockoon team's own API, disabled in this fork — omit the entry
-        // point (see environment.cloudEnabled).
+        // point (see env.cloudEnabled).
         enabled:
-          environment.cloudEnabled &&
+          env.cloudEnabled &&
           hasActiveEnvironment &&
           isActiveEnvironmentEditable
       },
@@ -758,7 +758,7 @@ export class CommandPaletteService {
           });
         },
         score: 1,
-        enabled: environment.cloudEnabled && isSyncConnected
+        enabled: env.cloudEnabled && isSyncConnected
       },
       {
         id: 'EXPORT_ENVIRONMENT_OPENAPI_JSON',
@@ -991,7 +991,7 @@ export class CommandPaletteService {
           },
           score: 1,
           enabled:
-            environment.cloudEnabled &&
+            env.cloudEnabled &&
             hasActiveEnvironment &&
             activeEnvironmentIsLocal &&
             isSyncConnected
@@ -1008,7 +1008,7 @@ export class CommandPaletteService {
             .subscribe();
         },
         score: 1,
-        enabled: environment.cloudEnabled && isSyncConnected
+        enabled: env.cloudEnabled && isSyncConnected
       });
     }
 
