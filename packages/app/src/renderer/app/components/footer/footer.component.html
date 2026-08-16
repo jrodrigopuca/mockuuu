@@ -39,7 +39,7 @@
     </div>
   }
 
-  @if (generatingTemplate !== 'NONE') {
+  @if (cloudEnabled && generatingTemplate !== 'NONE') {
     <div class="footer-item d-flex align-items-center px-2">
       @if (generatingTemplate === 'DONE') {
         <button
@@ -62,7 +62,7 @@
     </div>
   }
 
-  @if (generatingEndpoint !== 'NONE') {
+  @if (cloudEnabled && generatingEndpoint !== 'NONE') {
     <div class="footer-item d-flex align-items-center px-2">
       @if (generatingEndpoint === 'DONE') {
         <button

@@ -25,6 +25,11 @@ const commonOptions = {
   define: {
     IS_DEV: isDev ? 'true' : 'false',
     IS_TESTING: isTesting ? 'true' : 'false',
+    // Master switch for Mockoon Cloud functionality (auth, sync, cloud
+    // environments, deployments). Hard-off, static define — mirrors
+    // `cloudEnabled` in the renderer's environment files. Flip to 'true'
+    // only if Mockoon Cloud support is reinstated.
+    CLOUD_ENABLED: 'false',
     WEBSITE_URL: JSON.stringify(
       isDev ? 'http://localhost:3000/' : 'https://mockoon.com/'
     ),

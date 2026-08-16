@@ -7,5 +7,6 @@ export const environment: AppEnvironment = {
   useFirebaseEmulator: true,
   ci: false,
   websiteURL: 'http://localhost:3000/',
-  apiURL: 'http://localhost:5003/'
+  apiURL: 'http://localhost:5003/',
+  cloudEnabled: false
 };

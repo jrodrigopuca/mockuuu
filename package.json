@@ -39,13 +39,10 @@
     "build:libs:watch": "concurrently \"npm run build:watch --workspace=@mockoon/commons\" \"npm run build:watch --workspace=@mockoon/commons-server\" \"npm run build:watch --workspace=@mockoon/cloud\"",
     "build:serverless": "npm run build --workspace=@mockoon/serverless",
     "build:cli": "npm run build --workspace=@mockoon/cli",
-    "build:web:dev:watch": "npm run build:watch:web --workspace=@mockoon/app",
     "build:desktop:dev:watch": "npm run build:watch:all --workspace=@mockoon/app",
     "build:desktop:dev": "npm run build:dev:all --workspace=@mockoon/app",
     "build:desktop:ci": "npm run build:ci:all --workspace=@mockoon/app",
     "build:desktop:prod": "npm run build:prod:all --workspace=@mockoon/app",
-    "build:web:prod": "npm run build:prod:web --workspace=@mockoon/app",
-    "start:web:dev": "npm run start:web --workspace=@mockoon/app",
     "start:desktop:dev": "npm run start --workspace=@mockoon/app",
     "start:desktop:dev:2": "npm run start:2 --workspace=@mockoon/app",
     "start:desktop:dev:3": "npm run start:3 --workspace=@mockoon/app",
@@ -66,7 +63,6 @@
     "package:desktop:test:win": "npm run package:test:win --workspace=@mockoon/app",
     "package:desktop:test:mac": "npm run package:test:mac --workspace=@mockoon/app",
     "package:desktop:test:linux": "npm run package:test:linux --workspace=@mockoon/app",
-    "deploy:web": "npm run deploy:web --workspace=@mockoon/app",
     "documentation:desktop": "npm run documentation --workspace=@mockoon/app"
   },
   "workspaces": [

@@ -43,7 +43,14 @@ export class UserService {
   private mainApiService = inject(MainApiService);
   private loggerService = inject(LoggerService);
   private isWeb = Config.isWeb;
-  private auth: Auth = getAuth();
+  // Lazy: getAuth() requires a default Firebase app to already be
+  // initialized, which only happens when environment.cloudEnabled is true
+  // (see main.ts). UserService itself is constructed unconditionally by
+  // Angular's DI, so this must not run at construction time — every caller
+  // of `this.auth` is reached only through gated entry points.
+  private get auth(): Auth {
+    return getAuth();
+  }
   private authState$ = new Observable<FirebaseUser | null>((subscriber) => {
     const unsubscribe = onIdTokenChanged(
       this.auth,

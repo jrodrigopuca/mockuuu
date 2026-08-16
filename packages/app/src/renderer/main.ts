@@ -48,20 +48,27 @@ if (environment.production) {
   enableProdMode();
 }
 
-const firebaseApp = initializeApp(Config.firebaseConfig);
-const auth = getAuth(firebaseApp);
-auth.setPersistence(browserLocalPersistence);
+// Mockoon Cloud is disabled in this fork (see environment.cloudEnabled) —
+// skip initializing the Firebase app entirely so nothing in the renderer
+// can reach Mockoon's own Firebase project. UserService.auth relies on this
+// having run (getAuth() needs a default app already initialized), so it's
+// lazy too — see the `auth` getter there.
+if (environment.cloudEnabled) {
+  const firebaseApp = initializeApp(Config.firebaseConfig);
+  const auth = getAuth(firebaseApp);
+  auth.setPersistence(browserLocalPersistence);
 
-if (environment.useFirebaseEmulator) {
-  connectAuthEmulator(auth, 'http://localhost:9099', {
-    disableWarnings: true
-  });
-}
+  if (environment.useFirebaseEmulator) {
+    connectAuthEmulator(auth, 'http://localhost:9099', {
+      disableWarnings: true
+    });
+  }
 
-const functions = getFunctions(firebaseApp);
+  const functions = getFunctions(firebaseApp);
 
-if (environment.useFirebaseEmulator) {
-  connectFunctionsEmulator(functions, 'localhost', 5001);
+  if (environment.useFirebaseEmulator) {
+    connectFunctionsEmulator(functions, 'localhost', 5001);
+  }
 }
 
 const bootstrap = () => {

@@ -58,6 +58,7 @@ import { UIService } from 'src/renderer/app/services/ui.service';
 import { setActiveTemplatesTabAction } from 'src/renderer/app/stores/actions';
 import { Store } from 'src/renderer/app/stores/store';
 import { Config } from 'src/renderer/config';
+import { environment } from 'src/renderer/environments/environment';
 import { CheckboxComponent } from '../../custom-form-elements/checkbox.component';
 
 @Component({
@@ -110,6 +111,7 @@ export class TemplatesModalComponent implements OnInit {
   public focusableInputs = FocusableInputs;
   public open = false;
   public accountUrl = Config.accountUrl;
+  public cloudEnabled = environment.cloudEnabled;
   private isFirstDemo = true;
 
   constructor() {

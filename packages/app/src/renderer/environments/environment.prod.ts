@@ -7,5 +7,6 @@ export const environment: AppEnvironment = {
   useFirebaseEmulator: false,
   ci: false,
   websiteURL: 'https://mockoon.com/',
-  apiURL: 'https://api.mockoon.com/'
+  apiURL: 'https://api.mockoon.com/',
+  cloudEnabled: false
 };

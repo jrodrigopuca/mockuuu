@@ -26,9 +26,11 @@
         <app-svg icon="add_box" />
       </button>
       <div class="dropdown-menu" id="routes-add-dropdown-menu" ngbDropdownMenu>
-        <button class="btn dropdown-item" (click)="addCRUDRouteTemplate()">
-          <app-svg icon="magic" class="me-1" /> Assistants and templates
-        </button>
+        @if (cloudEnabled) {
+          <button class="btn dropdown-item" (click)="addCRUDRouteTemplate()">
+            <app-svg icon="magic" class="me-1" /> Assistants and templates
+          </button>
+        }
         <button class="btn dropdown-item" (click)="addCRUDRoute()">
           <app-svg icon="endpoints" class="me-1" /> CRUD route
         </button>

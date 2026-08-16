@@ -9,6 +9,7 @@ import { UIService } from 'src/renderer/app/services/ui.service';
 import { UserService } from 'src/renderer/app/services/user.service';
 import { Store } from 'src/renderer/app/stores/store';
 import { Config } from 'src/renderer/config';
+import { environment } from 'src/renderer/environments/environment';
 import { FileWatcherOptions } from 'src/shared/models/settings.model';
 
 @Service()
@@ -30,6 +31,13 @@ export class MainApiListenerService {
         });
       });
       this.mainApiService.receive('APP_AUTH_CALLBACK', (token) => {
+        // Mockoon Cloud is disabled in this fork: the auth callback HTTP
+        // server (main/libs/auth.ts) never starts, so this shouldn't fire,
+        // but guard here too rather than relying solely on that.
+        if (!environment.cloudEnabled) {
+          return;
+        }
+
         this.zone.run(() => {
           this.userService.authCallbackHandler(token).subscribe();
         });
@@ -107,9 +115,15 @@ export class MainApiListenerService {
           this.zone.run(() => {
             switch (action) {
               case 'auth':
-                this.userService
-                  .authCallbackHandler(parameters.token)
-                  .subscribe();
+                // Mockoon Cloud is disabled in this fork: reject the
+                // mockoon://auth deep link instead of signing in, since it
+                // can be triggered from outside the app (OS-level protocol
+                // handler) and bypasses every in-app UI gate.
+                if (environment.cloudEnabled) {
+                  this.userService
+                    .authCallbackHandler(parameters.token)
+                    .subscribe();
+                }
                 break;
               case 'load-environment':
                 this.environmentsService

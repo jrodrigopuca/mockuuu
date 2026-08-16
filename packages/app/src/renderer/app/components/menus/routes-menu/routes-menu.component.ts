@@ -72,6 +72,7 @@ import { MainApiService } from 'src/renderer/app/services/main-api.service';
 import { UIService } from 'src/renderer/app/services/ui.service';
 import { Store } from 'src/renderer/app/stores/store';
 import { Config } from 'src/renderer/config';
+import { environment } from 'src/renderer/environments/environment';
 import { Settings } from 'src/shared/models/settings.model';
 
 type FullFolder = {
@@ -127,6 +128,10 @@ export class RoutesMenuComponent {
   public isActiveEnvironmentCloud$ = this.store.selectIsActiveEnvCloud();
   public environments$: Observable<Environments> =
     this.store.select('environments');
+  // Templates modal is fully disabled in this fork (see
+  // environment.cloudEnabled) — this button points at a dead modal, hide
+  // it so there's no dead UI.
+  public cloudEnabled = environment.cloudEnabled;
   public rootFolder$: Observable<FullFolder>;
   public activeRoute$: Observable<Route>;
   public environmentsStatus$: Observable<EnvironmentsStatuses>;

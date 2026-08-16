@@ -12,6 +12,7 @@ import {
   Observable,
   catchError,
   map,
+  of,
   shareReplay,
   switchMap,
   tap
@@ -22,6 +23,7 @@ import { UserService } from 'src/renderer/app/services/user.service';
 import { updateUserAction } from 'src/renderer/app/stores/actions';
 import { Store } from 'src/renderer/app/stores/store';
 import { Config } from 'src/renderer/config';
+import { environment } from 'src/renderer/environments/environment';
 
 @Service()
 export class TemplatesService {
@@ -44,8 +46,16 @@ export class TemplatesService {
 
   /**
    * Get the list of available templates
+   *
+   * Templates are served from the Mockoon team's own API. This fork must
+   * not depend on their infrastructure, so the call is skipped entirely
+   * when cloud is disabled (see environment.cloudEnabled).
    */
   public getTemplatesList(): Observable<TemplateListItem[]> {
+    if (!environment.cloudEnabled) {
+      return of([]);
+    }
+
     return this.httpClient
       .get<Template[]>(`${Config.apiURL}templates`)
       .pipe(shareReplay(1));
@@ -54,9 +64,16 @@ export class TemplatesService {
   /**
    * Get a template by its id
    *
+   * Same external dependency as getTemplatesList() above — skipped when
+   * cloud is disabled (see environment.cloudEnabled).
+   *
    * @param id
    */
   public getTemplateById(id: string): Observable<Template> {
+    if (!environment.cloudEnabled) {
+      return of(null);
+    }
+
     const cacheKey = id;
 
     if (!this.templateCache.has(cacheKey)) {

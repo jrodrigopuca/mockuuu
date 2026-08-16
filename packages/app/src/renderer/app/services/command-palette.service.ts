@@ -16,6 +16,7 @@ import { UIService } from 'src/renderer/app/services/ui.service';
 import { clearLogsAction } from 'src/renderer/app/stores/actions';
 import { Store } from 'src/renderer/app/stores/store';
 import { Config } from 'src/renderer/config';
+import { environment } from 'src/renderer/environments/environment';
 
 @Service()
 export class CommandPaletteService {
@@ -361,7 +362,8 @@ export class CommandPaletteService {
           this.environmentsService.addCloudEnvironment(null, true).subscribe();
         },
         score: 1,
-        enabled: isUserConnectedAndPaid && isSyncConnected
+        enabled:
+          environment.cloudEnabled && isUserConnectedAndPaid && isSyncConnected
       },
       {
         id: 'VIEW_SELECT_PREVIOUS_ENVIRONMENT',
@@ -625,7 +627,13 @@ export class CommandPaletteService {
           this.uiService.openModal('templates');
         },
         score: 1,
-        enabled: hasActiveEnvironment && isActiveEnvironmentEditable
+        // Templates modal's only data source (JSON Templates list) is the
+        // Mockoon team's own API, disabled in this fork — omit the entry
+        // point (see environment.cloudEnabled).
+        enabled:
+          environment.cloudEnabled &&
+          hasActiveEnvironment &&
+          isActiveEnvironmentEditable
       },
       {
         id: 'ENVIRONMENT_TOGGLE_RECORDING',
@@ -750,7 +758,7 @@ export class CommandPaletteService {
           });
         },
         score: 1,
-        enabled: isSyncConnected
+        enabled: environment.cloudEnabled && isSyncConnected
       },
       {
         id: 'EXPORT_ENVIRONMENT_OPENAPI_JSON',
@@ -983,7 +991,10 @@ export class CommandPaletteService {
           },
           score: 1,
           enabled:
-            hasActiveEnvironment && activeEnvironmentIsLocal && isSyncConnected
+            environment.cloudEnabled &&
+            hasActiveEnvironment &&
+            activeEnvironmentIsLocal &&
+            isSyncConnected
         }
       );
     } else {
@@ -997,7 +1008,7 @@ export class CommandPaletteService {
             .subscribe();
         },
         score: 1,
-        enabled: isSyncConnected
+        enabled: environment.cloudEnabled && isSyncConnected
       });
     }
 

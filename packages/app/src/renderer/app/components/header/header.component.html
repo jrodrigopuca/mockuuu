@@ -232,7 +232,7 @@
           <app-svg icon="logout" class="pe-2" />
           Log out
         </button>
-      } @else {
+      } @else if (cloudEnabled) {
         <button class="btn dropdown-item" (click)="login()">
           <app-svg icon="login" class="pe-2" />
           Sign in
@@ -251,9 +251,11 @@
           <button class="btn dropdown-item" (click)="disconnectSync()">
             Disconnect sync server
           </button>
-          <button class="btn dropdown-item" (click)="refreshAuthToken()">
-            Refresh auth token
-          </button>
+          @if (cloudEnabled) {
+            <button class="btn dropdown-item" (click)="refreshAuthToken()">
+              Refresh auth token
+            </button>
+          }
         </div>
       }
     </div>

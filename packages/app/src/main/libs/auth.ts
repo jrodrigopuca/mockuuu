@@ -5,13 +5,23 @@ import { Config } from 'src/main/config';
 import { getMainWindow } from 'src/main/libs/main-window';
 import { parse as urlParse } from 'url';
 
+declare const CLOUD_ENABLED: boolean;
+
 let server: Server;
 
 /**
  * Start a server to listen for the auth callback from the website
  * and send the token to the renderer process
+ *
+ * No-op when Mockoon Cloud is disabled (CLOUD_ENABLED = false): never opens
+ * a local HTTP listener nor launches the login URL, since the login flow
+ * that would reach it is itself unreachable from the UI.
  */
 export const startAuthCallbackServer = async () => {
+  if (!CLOUD_ENABLED) {
+    return;
+  }
+
   // Close the server if already started
   if (server) {
     server.close();

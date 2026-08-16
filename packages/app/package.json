@@ -33,16 +33,13 @@
     "build:ci:main": "node ./src/main/esbuild.config.js --mode production --testing",
     "build:prod:main": "node ./src/main/esbuild.config.js --mode production",
     "build:watch:renderer": "ng build --configuration=development --watch --output-hashing=all",
-    "build:watch:web": "ng build --configuration=development-web --watch --output-hashing=all",
     "build:dev:renderer": "ng build --configuration=development --output-hashing=all",
     "build:ci:renderer": "ng build --configuration=ci",
     "build:prod:renderer": "ng build --configuration=production",
-    "build:prod:web": "npm run clean-dist && ng build --configuration=production-web",
     "build:watch:all": "npm run clean-dist && concurrently \"npm run build:watch:renderer\" \"npm run build:watch:main\"",
     "build:dev:all": "npm run clean-dist && npm run build:dev:renderer && npm run build:dev:main",
     "build:ci:all": "npm run clean-dist && npm run build:ci:renderer && npm run build:ci:main",
     "build:prod:all": "npm run clean-dist && npm run build:prod:renderer && npm run build:prod:main",
-    "start:web": "http-server ./dist/renderer -p 3001 -P http://localhost:3001?",
     "start": "electron . --remote-debugging-port=8888 --data-folder=./tmp --enable-dev-tools",
     "start:2": "electron . --remote-debugging-port=8889 --data-folder=./tmp2 --enable-dev-tools",
     "start:3": "electron . --remote-debugging-port=8890 --data-folder=./tmp3 --enable-dev-tools",
@@ -54,8 +51,7 @@
     "package:mac:unsigned": "npm run clean-packages && electron-builder --publish never --config ./build-configs/electron-builder.mac-unsigned.js",
     "package:test:win": "npm run clean-packages && electron-builder --publish never --config ./build-configs/test/electron-builder.win.js --dir",
     "package:test:linux": "npm run clean-packages && electron-builder --publish never --config ./build-configs/test/electron-builder.linux.js --dir",
-    "package:test:mac": "npm run clean-packages && electron-builder --publish never --config ./build-configs/test/electron-builder.mac.js --dir",
-    "deploy:web": "firebase deploy --only hosting"
+    "package:test:mac": "npm run clean-packages && electron-builder --publish never --config ./build-configs/test/electron-builder.mac.js --dir"
   },
   "dependencies": {
     "@microsoft/fetch-event-source": "2.0.1",

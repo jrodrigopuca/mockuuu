@@ -8,6 +8,8 @@ import {
 } from 'src/main/libs/zoom';
 import { MenuStateUpdatePayload } from 'src/shared/models/ipc.model';
 
+declare const CLOUD_ENABLED: boolean;
+
 export const createMenu = (mainWindow: BrowserWindow): Menu => {
   const menu: any = [
     {
@@ -61,15 +63,25 @@ export const createMenu = (mainWindow: BrowserWindow): Menu => {
             mainWindow.webContents.send('APP_MENU', 'DUPLICATE_ENVIRONMENT');
           }
         },
-        { type: 'separator' },
-        {
-          id: 'MENU_NEW_CLOUD_ENVIRONMENT',
-          label: 'New cloud environment',
-          accelerator: 'CmdOrCtrl+Shift+N',
-          click: () => {
-            mainWindow.webContents.send('APP_MENU', 'NEW_CLOUD_ENVIRONMENT');
-          }
-        },
+        // Mockoon Cloud is disabled in this fork (see CLOUD_ENABLED) — the
+        // "New cloud environment" entry point is omitted entirely rather
+        // than just disabled, so it never appears in the menu.
+        ...(CLOUD_ENABLED
+          ? [
+              { type: 'separator' },
+              {
+                id: 'MENU_NEW_CLOUD_ENVIRONMENT',
+                label: 'New cloud environment',
+                accelerator: 'CmdOrCtrl+Shift+N',
+                click: () => {
+                  mainWindow.webContents.send(
+                    'APP_MENU',
+                    'NEW_CLOUD_ENVIRONMENT'
+                  );
+                }
+              }
+            ]
+          : []),
         { type: 'separator' },
         {
           id: 'MENU_PREVIOUS_ENVIRONMENT',

@@ -125,6 +125,10 @@ export class AppComponent implements OnInit {
    */
   @HostListener('document:visibilitychange')
   public documentVisibilityChange() {
+    if (!environment.cloudEnabled) {
+      return;
+    }
+
     const user = this.store.get('user');
 
     if (document.visibilityState === 'visible' && user) {
@@ -166,14 +170,18 @@ export class AppComponent implements OnInit {
     this.environmentsService.saveEnvironments().subscribe();
     this.environmentsService.listenServerTransactions().subscribe();
     this.appQuitService.init().subscribe();
-    this.remoteConfigService.init().subscribe();
-    this.userService.init().subscribe();
-    this.syncService.init().subscribe();
-    this.deployService.init().subscribe();
+
+    if (environment.cloudEnabled) {
+      this.remoteConfigService.init().subscribe();
+      this.userService.init().subscribe();
+      this.syncService.init().subscribe();
+      this.deployService.init().subscribe();
+    }
+
     this.mainApiListenerService.init();
     this.serverService.init().subscribe();
 
-    if (environment.web) {
+    if (environment.cloudEnabled && environment.web) {
       this.userService.webAuthHandler().subscribe();
     }
 
@@ -190,9 +198,11 @@ export class AppComponent implements OnInit {
     /**
      * Listen to online event to reload user and trigger the Firebase auth state change
      */
-    fromEvent(window, 'online')
-      .pipe(switchMap(() => this.userService.reloadUser()))
-      .subscribe();
+    if (environment.cloudEnabled) {
+      fromEvent(window, 'online')
+        .pipe(switchMap(() => this.userService.reloadUser()))
+        .subscribe();
+    }
 
     this.activeEnvironment$ = this.store.selectActiveEnvironment().pipe(
       tap((activeEnvironment) => {

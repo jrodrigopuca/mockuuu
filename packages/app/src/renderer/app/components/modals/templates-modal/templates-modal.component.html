@@ -22,28 +22,32 @@
 
 <div class="modal-header border-0 pb-0">
   <ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        [class]="{ active: activeTemplatesTab === 'LIST' }"
-        (click)="setActiveTab('LIST')"
-      >
-        JSON Templates
-      </a>
-    </li>
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        [class]="{
-          active: activeTemplatesTab === 'GENERATE_TEMPLATE'
-        }"
-        (click)="setActiveTab('GENERATE_TEMPLATE')"
-      >
-        <app-svg icon="magic" class="me-2 text-warning" />
-        <!-- Display specific title for demo -->
-        {{ isFree ? 'AI assistants' : 'Generate JSON templates' }}
-      </a>
-    </li>
+    @if (cloudEnabled) {
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          [class]="{ active: activeTemplatesTab === 'LIST' }"
+          (click)="setActiveTab('LIST')"
+        >
+          JSON Templates
+        </a>
+      </li>
+    }
+    @if (cloudEnabled) {
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          [class]="{
+            active: activeTemplatesTab === 'GENERATE_TEMPLATE'
+          }"
+          (click)="setActiveTab('GENERATE_TEMPLATE')"
+        >
+          <app-svg icon="magic" class="me-2 text-warning" />
+          <!-- Display specific title for demo -->
+          {{ isFree ? 'AI assistants' : 'Generate JSON templates' }}
+        </a>
+      </li>
+    }
     @if (isPaid) {
       <li class="nav-item">
         <a

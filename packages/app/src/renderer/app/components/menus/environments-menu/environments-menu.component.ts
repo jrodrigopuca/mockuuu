@@ -57,6 +57,7 @@ import { UIService } from 'src/renderer/app/services/ui.service';
 import { UserService } from 'src/renderer/app/services/user.service';
 import { Store } from 'src/renderer/app/stores/store';
 import { Config } from 'src/renderer/config';
+import { environment } from 'src/renderer/environments/environment';
 import {
   EnvironmentsCategories,
   RecentLocalEnvironment,
@@ -133,18 +134,27 @@ export class EnvironmentsMenuComponent {
       'We will soon not support your Mockoon version anymore. Please update.'
   };
   public commonDropdownMenuItems: DropdownMenuItem[] = [
-    {
-      label: this.isWeb ? 'Duplicate' : 'Duplicate to the cloud',
-      icon: this.isWeb ? 'content_copy' : 'cloud',
-      twoSteps: false,
-      disabled$: () =>
-        this.store
-          .selectIsCloudEditable()
-          .pipe(map((isEditable) => !isEditable)),
-      action: ({ environmentUuid }: dropdownMenuPayload) => {
-        this.environmentsService.duplicateToCloud(environmentUuid).subscribe();
-      }
-    },
+    // Mockoon Cloud is disabled in this fork (see environment.cloudEnabled) —
+    // omit the "Duplicate to the cloud" entry point entirely, it's shared by
+    // both the local and cloud environment dropdown menus.
+    ...(environment.cloudEnabled
+      ? [
+          {
+            label: this.isWeb ? 'Duplicate' : 'Duplicate to the cloud',
+            icon: this.isWeb ? 'content_copy' : 'cloud',
+            twoSteps: false,
+            disabled$: () =>
+              this.store
+                .selectIsCloudEditable()
+                .pipe(map((isEditable) => !isEditable)),
+            action: ({ environmentUuid }: dropdownMenuPayload) => {
+              this.environmentsService
+                .duplicateToCloud(environmentUuid)
+                .subscribe();
+            }
+          }
+        ]
+      : []),
     ...(this.isWeb
       ? []
       : [
@@ -550,13 +560,18 @@ export class EnvironmentsMenuComponent {
       map((user) => user && user.plan !== 'FREE')
     );
 
-    this.categories = [
-      {
-        id: 'cloud',
-        label: this.isWeb ? 'APIs' : 'Cloud',
-        collapsed: false
-      }
-    ];
+    // Mockoon Cloud is disabled in this fork (see environment.cloudEnabled) —
+    // omit the cloud category/tab entirely so no cloud UI (add menu, cloud
+    // environment list, login/subscribe CTA, instances footer) ever renders.
+    this.categories = environment.cloudEnabled
+      ? [
+          {
+            id: 'cloud',
+            label: this.isWeb ? 'APIs' : 'Cloud',
+            collapsed: false
+          }
+        ]
+      : [];
 
     if (!this.isWeb) {
       this.categories.push({

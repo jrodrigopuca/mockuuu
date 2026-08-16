@@ -84,6 +84,7 @@ export class HeaderComponent implements OnInit {
   public isDev = !env.production;
   public isWeb = Config.isWeb;
   public accountUrl = Config.accountUrl;
+  public cloudEnabled = env.cloudEnabled;
 
   ngOnInit() {
     this.os$ = from(this.mainApiService.invoke('APP_GET_OS'));

@@ -16,6 +16,7 @@ import { UIService } from 'src/renderer/app/services/ui.service';
 import { setActiveTemplatesTabAction } from 'src/renderer/app/stores/actions';
 import { Store } from 'src/renderer/app/stores/store';
 import { Config } from 'src/renderer/config';
+import { environment } from 'src/renderer/environments/environment';
 
 @Component({
   selector: 'app-footer',
@@ -42,6 +43,10 @@ export class FooterComponent implements OnInit {
     .select('user')
     .pipe(map((user) => !!user && user.plan !== Plans.FREE));
   public version = Config.appVersion;
+  // Templates modal is fully disabled in this fork (see
+  // environment.cloudEnabled) — these buttons point at a dead modal, hide
+  // them so there's no dead UI.
+  public cloudEnabled = environment.cloudEnabled;
 
   ngOnInit() {
     this.updateAvailable$ = this.eventsService.updateAvailable$;
