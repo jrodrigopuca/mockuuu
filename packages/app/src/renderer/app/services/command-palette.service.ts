@@ -362,8 +362,7 @@ export class CommandPaletteService {
           this.environmentsService.addCloudEnvironment(null, true).subscribe();
         },
         score: 1,
-        enabled:
-          env.cloudEnabled && isUserConnectedAndPaid && isSyncConnected
+        enabled: env.cloudEnabled && isUserConnectedAndPaid && isSyncConnected
       },
       {
         id: 'VIEW_SELECT_PREVIOUS_ENVIRONMENT',
