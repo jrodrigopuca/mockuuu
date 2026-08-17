@@ -11,8 +11,8 @@ describe('First load', () => {
     });
   });
 
-  it('Open window with Mockoon title', async () => {
-    expect(await browser.getTitle()).toContain('Mockoon');
+  it('Open window with Mockuuu title', async () => {
+    expect(await browser.getTitle()).toContain('Mockuuu');
   });
 
   it('Show welcome modal', async () => {

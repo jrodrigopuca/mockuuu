@@ -12,11 +12,18 @@ import utils, {
 } from '../libs/utils';
 
 export enum RoutesMenuActions {
-  OPEN_TEMPLATES = 1,
-  ADD_CRUD_ROUTE = 2,
-  ADD_HTTP_ROUTE = 3,
-  ADD_WS_ROUTE = 4,
-  ADD_FOLDER = 5
+  // "Assistants and templates" no longer renders — it's gated behind
+  // cloudEnabled, which is always false in this fork (see
+  // routes-menu.component.html). There is no valid dropdown position for it
+  // anymore. Kept as 0 (never matches any real :nth-child) so callers fail
+  // loudly on a missing element instead of silently clicking whatever now
+  // sits at the old position 1 (currently "CRUD route"). Positions below
+  // shifted up by one now that this item is gone.
+  OPEN_TEMPLATES = 0,
+  ADD_CRUD_ROUTE = 1,
+  ADD_HTTP_ROUTE = 2,
+  ADD_WS_ROUTE = 3,
+  ADD_FOLDER = 4
 }
 class Routes {
   private rulesTargetIndexes: Record<ResponseRuleTargets, number> = {
@@ -288,29 +295,38 @@ class Routes {
     await $('#routes-add-dropdown .dropdown-toggle').click();
   }
 
+  /**
+   * "Assistants and templates" is gated behind cloudEnabled, which is always
+   * false in this fork — this entry point no longer exists. Not called by
+   * any spec in test/specs (only by the documentation screenshot tool),
+   * kept for API compatibility; will now fail loudly (element not found)
+   * instead of silently clicking "CRUD route" (see RoutesMenuActions.OPEN_TEMPLATES).
+   */
   public async openTemplates(): Promise<void> {
     await $('#routes-add-dropdown .dropdown-toggle').click();
-    await $('#routes-add-dropdown-menu .dropdown-item:nth-child(1)').click();
+    await $(
+      `#routes-add-dropdown-menu .dropdown-item:nth-child(${RoutesMenuActions.OPEN_TEMPLATES})`
+    ).click();
   }
 
   public async addCRUDRoute(): Promise<void> {
     await $('#routes-add-dropdown .dropdown-toggle').click();
-    await $('#routes-add-dropdown-menu .dropdown-item:nth-child(2)').click();
+    await $('#routes-add-dropdown-menu .dropdown-item:nth-child(1)').click();
   }
 
   public async addHTTPRoute(): Promise<void> {
     await $('#routes-add-dropdown .dropdown-toggle').click();
-    await $('#routes-add-dropdown-menu .dropdown-item:nth-child(3)').click();
+    await $('#routes-add-dropdown-menu .dropdown-item:nth-child(2)').click();
   }
 
   public async addWebSocketRoute(): Promise<void> {
     await $('#routes-add-dropdown .dropdown-toggle').click();
-    await $('#routes-add-dropdown-menu .dropdown-item:nth-child(4)').click();
+    await $('#routes-add-dropdown-menu .dropdown-item:nth-child(3)').click();
   }
 
   public async addFolder(): Promise<void> {
     await $('#routes-add-dropdown .dropdown-toggle').click();
-    await $('#routes-add-dropdown-menu .dropdown-item:nth-child(5)').click();
+    await $('#routes-add-dropdown-menu .dropdown-item:nth-child(4)').click();
   }
 
   public async selectTemplateTab(index: 1 | 2 | 3): Promise<void> {

@@ -5,14 +5,16 @@ import { SharedConfig } from '../../src/shared/shared-config';
 const Config = SharedConfig({ apiURL: '', websiteURL: '' });
 
 export enum DropdownMenuEnvironmentActions {
-  DUPLICATE_TO_CLOUD = 1,
-  DUPLICATE = 2,
-  COPY_JSON = 3,
-  REIMPORT_OPENAPI = 4,
-  // separator = 5
-  SHOW_FOLDER = 6,
-  MOVE_FOLDER = 7,
-  CLOSE = 8
+  // "Duplicate to the cloud" is omitted from the dropdown when Mockoon Cloud
+  // is disabled (see environment.cloudEnabled) — every position below shifted
+  // up by one as a result.
+  DUPLICATE = 1,
+  COPY_JSON = 2,
+  REIMPORT_OPENAPI = 3,
+  // separator = 4
+  SHOW_FOLDER = 5,
+  MOVE_FOLDER = 6,
+  CLOSE = 7
 }
 
 export enum DropdownMenuDatabucketActions {

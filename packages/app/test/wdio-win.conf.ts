@@ -11,7 +11,7 @@ const config: WebdriverIO.Config = {
           process.cwd(),
           'packages',
           'win-unpacked',
-          'Mockoon.exe'
+          'Mockuuu.exe'
         ),
         appArgs: ['user-data-dir=' + join(process.cwd(), 'tmp')]
       }

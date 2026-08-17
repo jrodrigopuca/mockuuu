@@ -11,10 +11,10 @@ const config: WebdriverIO.Config = {
           process.cwd(),
           'packages',
           'mac-arm64',
-          'Mockoon.app',
+          'Mockuuu.app',
           'Contents',
           'MacOS',
-          'Mockoon'
+          'Mockuuu'
         ),
         appArgs: ['user-data-dir=' + join(process.cwd(), 'tmp')]
       }
