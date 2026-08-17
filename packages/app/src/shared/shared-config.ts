@@ -28,7 +28,8 @@ export const SharedConfig = (options: {
     // Points at this fork's own GitHub repo rather than upstream Mockoon's —
     // this fork must not auto-update itself into (or display changelogs
     // from) the original Mockoon project.
-    githubBinaryURL: 'https://github.com/jrodrigopuca/mockuuu/releases/download/',
+    githubBinaryURL:
+      'https://github.com/jrodrigopuca/mockuuu/releases/download/',
     latestReleaseDataURL:
       'https://api.github.com/repos/jrodrigopuca/mockuuu/releases/latest',
     changelogMarkdownURL:

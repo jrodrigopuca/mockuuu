@@ -125,7 +125,9 @@ export const applyUpdate = () => {
 
       app.quit();
     } else {
-      shell.openExternal('https://github.com/jrodrigopuca/mockuuu/releases/latest');
+      shell.openExternal(
+        'https://github.com/jrodrigopuca/mockuuu/releases/latest'
+      );
     }
   }
 };
