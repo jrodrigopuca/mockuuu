@@ -29,7 +29,10 @@ const notifyUpdate = (mainWindow: BrowserWindow, version: string) => {
 
 export const checkForUpdate = async (mainWindow: BrowserWindow) => {
   const userDataPath = app.getPath('userData');
-  let releaseResponse: { tag: string };
+  // Shape of the GitHub "latest release" API response (a small subset of
+  // it) — this fork checks its own repo's releases, not Mockoon's custom
+  // stable.json endpoint, so the field names differ (tag_name, not tag).
+  let releaseResponse: { tag_name: string };
 
   try {
     // try to remove existing old update
@@ -54,7 +57,7 @@ export const checkForUpdate = async (mainWindow: BrowserWindow) => {
     return;
   }
 
-  const latestVersion = releaseResponse.tag;
+  const latestVersion = releaseResponse.tag_name.replace(/^v/, '');
 
   if (semverGt(latestVersion, Config.appVersion)) {
     logInfo(`[MAIN][UPDATE] Found a new version v${latestVersion}`);
@@ -122,7 +125,7 @@ export const applyUpdate = () => {
 
       app.quit();
     } else {
-      shell.openExternal('https://mockoon.com/download');
+      shell.openExternal('https://github.com/jrodrigopuca/mockuuu/releases/latest');
     }
   }
 };

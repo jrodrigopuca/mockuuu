@@ -25,10 +25,15 @@ export const SharedConfig = (options: {
     },
     websiteURL: options.websiteURL,
     apiURL: options.apiURL,
-    githubBinaryURL: 'https://github.com/mockoon/mockoon/releases/download/',
-    latestReleaseDataURL: `${options.apiURL}releases/desktop/stable.json`,
-    changelogMarkdownURL: `${options.websiteURL}desktop-changelogs-markdown/`,
-    releasePublicURL: `${options.websiteURL}releases/`,
+    // Points at this fork's own GitHub repo rather than upstream Mockoon's —
+    // this fork must not auto-update itself into (or display changelogs
+    // from) the original Mockoon project.
+    githubBinaryURL: 'https://github.com/jrodrigopuca/mockuuu/releases/download/',
+    latestReleaseDataURL:
+      'https://api.github.com/repos/jrodrigopuca/mockuuu/releases/latest',
+    changelogMarkdownURL:
+      'https://raw.githubusercontent.com/jrodrigopuca/mockuuu/main/changelogs/',
+    releasePublicURL: 'https://github.com/jrodrigopuca/mockuuu/releases/tag/v',
     docs: {
       adminApi: `${docsUrl}admin-api/overview/`,
       templating: `${docsUrl}templating/overview/`,

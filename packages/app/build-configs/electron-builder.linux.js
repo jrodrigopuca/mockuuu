@@ -31,7 +31,7 @@ const config = Object.assign({}, commonConfig, {
     artifactName: 'mockoon-${version}.${arch}.${ext}',
     desktop: {
       entry: {
-        Name: 'Mockoon',
+        Name: 'Mockuuu',
         Type: 'Application',
         Categories: 'Development'
       }

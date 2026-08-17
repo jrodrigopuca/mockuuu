@@ -13,6 +13,10 @@
   <h1>@Mockoon/cli</h1>
 </div>
 
+> This package is part of [Mockuuu](https://github.com/jrodrigopuca/mockuuu), a personal fork of
+> [Mockoon](https://mockoon.com) released under the same MIT license. The rest of this document is
+> upstream Mockoon's own CLI documentation, which still applies as-is to this fork.
+
 Welcome to Mockoon's official CLI, a lightweight and fast NPM package to deploy your mock APIs anywhere.
 Feed it with a Mockoon's [data file](https://mockoon.com/docs/latest/mockoon-data-files/data-files-location/), or OpenAPI specification file (JSON or YAML), and you are good to go.
 

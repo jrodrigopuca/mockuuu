@@ -3,9 +3,9 @@
   "description": "Mockuuu (fork of Mockoon) is the easiest and quickest way to run mock APIs locally. No remote deployment, no account required, open source.",
   "version": "9.8.0",
   "author": {
-    "name": "Mockoon (1kB SARL-S)",
-    "email": "team@mockoon.com",
-    "url": "https://mockoon.com/"
+    "name": "Mockuuu",
+    "email": "jarp@outlook.com",
+    "url": "https://github.com/jrodrigopuca/mockuuu"
   },
   "private": true,
   "license": "MIT",

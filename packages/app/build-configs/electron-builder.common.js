@@ -19,7 +19,7 @@ const config = {
   ],
   protocols: [
     {
-      name: 'Mockoon',
+      name: 'Mockuuu',
       schemes: ['mockoon'],
       role: 'Editor'
     }
