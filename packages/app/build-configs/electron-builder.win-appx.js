@@ -9,10 +9,17 @@ const config = Object.assign({}, commonConfig, {
     target: [{ target: 'appx' }]
   },
   appx: {
-    publisher: 'CN=F7BC8E8D-E7FB-4CF2-87B7-66105AC3B61D',
-    publisherDisplayName: '1kB SARL-S',
-    identityName: '1kB.mockoon',
-    applicationId: 'mockoon',
+    // Own identity for this fork — the original values here were the real
+    // Mockoon team's registered Microsoft Store publisher identity
+    // (CN=F7BC8E8D-..., "1kB SARL-S"), which this fork has no right to
+    // publish under. This CN doesn't need to be pre-registered anywhere for
+    // local/sideload builds — electron-builder generates a matching
+    // self-signed test certificate automatically since no real Store
+    // account/cert is configured.
+    publisher: 'CN=jrodrigopuca',
+    publisherDisplayName: 'Mockuuu',
+    identityName: 'jrodrigopuca.mockuuu',
+    applicationId: 'mockuuu',
     backgroundColor: '#ffffff',
     artifactName: 'mockoon.${version}.${ext}'
   }

@@ -25,6 +25,18 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
+      - name: Set app version from tag
+        if: github.ref_type == 'tag'
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          node -e "
+            const fs = require('fs');
+            const path = './packages/app/package.json';
+            const pkg = JSON.parse(fs.readFileSync(path, 'utf8'));
+            pkg.version = '$VERSION';
+            fs.writeFileSync(path, JSON.stringify(pkg, null, 2) + '\n');
+          "
+          echo "Set packages/app/package.json version to $VERSION (from tag $GITHUB_REF_NAME)"
       - name: Extract app version
         id: app-version
         run: |
@@ -63,6 +75,18 @@ jobs:
         run: |
           npm ci
           npm i dmg-license
+      - name: Set app version from tag
+        if: github.ref_type == 'tag'
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          node -e "
+            const fs = require('fs');
+            const path = './packages/app/package.json';
+            const pkg = JSON.parse(fs.readFileSync(path, 'utf8'));
+            pkg.version = '$VERSION';
+            fs.writeFileSync(path, JSON.stringify(pkg, null, 2) + '\n');
+          "
+          echo "Set packages/app/package.json version to $VERSION (from tag $GITHUB_REF_NAME)"
       - name: Build and package application
         run: |
           npm run build:libs
@@ -99,6 +123,18 @@ jobs:
           version: latest/stable
       - name: Install dependencies
         run: npm ci
+      - name: Set app version from tag
+        if: github.ref_type == 'tag'
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          node -e "
+            const fs = require('fs');
+            const path = './packages/app/package.json';
+            const pkg = JSON.parse(fs.readFileSync(path, 'utf8'));
+            pkg.version = '$VERSION';
+            fs.writeFileSync(path, JSON.stringify(pkg, null, 2) + '\n');
+          "
+          echo "Set packages/app/package.json version to $VERSION (from tag $GITHUB_REF_NAME)"
       - name: Build and package application
         run: |
           npm run build:libs
@@ -142,6 +178,19 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
+      - name: Set app version from tag
+        if: github.ref_type == 'tag'
+        shell: bash
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          node -e "
+            const fs = require('fs');
+            const path = './packages/app/package.json';
+            const pkg = JSON.parse(fs.readFileSync(path, 'utf8'));
+            pkg.version = '$VERSION';
+            fs.writeFileSync(path, JSON.stringify(pkg, null, 2) + '\n');
+          "
+          echo "Set packages/app/package.json version to $VERSION (from tag $GITHUB_REF_NAME)"
       - name: Build and package application
         run: |
           npm run build:libs
@@ -174,6 +223,19 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
+      - name: Set app version from tag
+        if: github.ref_type == 'tag'
+        shell: bash
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          node -e "
+            const fs = require('fs');
+            const path = './packages/app/package.json';
+            const pkg = JSON.parse(fs.readFileSync(path, 'utf8'));
+            pkg.version = '$VERSION';
+            fs.writeFileSync(path, JSON.stringify(pkg, null, 2) + '\n');
+          "
+          echo "Set packages/app/package.json version to $VERSION (from tag $GITHUB_REF_NAME)"
       - name: Build and package application
         run: |
           npm run build:libs
