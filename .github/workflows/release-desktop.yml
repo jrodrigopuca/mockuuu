@@ -208,5 +208,7 @@ jobs:
       - name: Create/update release with binaries
         uses: softprops/action-gh-release@3d0d9888cb7fd7b750713d6e236d1fcb99157228 # v3.0.2
         with:
+          name: Mockuuu ${{ github.ref_name }}
           files: artifacts/**/*
           fail_on_unmatched_files: true
+          generate_release_notes: true
