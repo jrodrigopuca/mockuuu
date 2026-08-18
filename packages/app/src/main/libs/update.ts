@@ -155,7 +155,7 @@ export const checkForUpdate = async (mainWindow: BrowserWindow) => {
         logError(
           '[MAIN][UPDATE] Existing download failed checksum verification, re-downloading'
         );
-        await fsPromises.unlink(updateFilePath).catch(() => {});
+        await fsPromises.unlink(updateFilePath).catch(() => undefined);
       }
 
       logInfo('[MAIN][UPDATE] Downloading binary file');
@@ -175,9 +175,7 @@ export const checkForUpdate = async (mainWindow: BrowserWindow) => {
           )
         );
 
-        logInfo(
-          '[MAIN][UPDATE] Binary file downloaded, verifying checksum'
-        );
+        logInfo('[MAIN][UPDATE] Binary file downloaded, verifying checksum');
 
         if (
           !(await verifyChecksum(updateFilePath, binaryFilename, latestVersion))
@@ -185,7 +183,7 @@ export const checkForUpdate = async (mainWindow: BrowserWindow) => {
           logError(
             '[MAIN][UPDATE] Downloaded binary failed checksum verification, aborting update'
           );
-          await fsPromises.unlink(updateFilePath).catch(() => {});
+          await fsPromises.unlink(updateFilePath).catch(() => undefined);
 
           return;
         }
