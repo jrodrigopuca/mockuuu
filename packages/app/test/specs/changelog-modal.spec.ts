@@ -38,7 +38,7 @@ describe('Changelog modal', () => {
 
     it('should show the welcome modal only', async () => {
       await utils.countElements($$('.modal-dialog'), 1);
-      await modals.assertTitle('Welcome to Mockoon!');
+      await modals.assertTitle('Welcome to Mockuuu!');
       await utils.waitForAutosave();
     });
 

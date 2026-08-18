@@ -17,7 +17,7 @@ describe('First load', () => {
 
   it('Show welcome modal', async () => {
     await modals.assertExists();
-    await modals.assertTitle('Welcome to Mockoon!');
+    await modals.assertTitle('Welcome to Mockuuu!');
   });
 
   it('Close welcome modal, check for persistence', async () => {

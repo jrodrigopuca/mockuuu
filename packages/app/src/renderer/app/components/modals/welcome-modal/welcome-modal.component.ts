@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { SvgComponent } from 'src/renderer/app/components/svg/svg.component';
 import { SettingsService } from 'src/renderer/app/services/settings.service';
 import { TourService } from 'src/renderer/app/services/tour.service';
 import { UIService } from 'src/renderer/app/services/ui.service';
@@ -10,7 +9,7 @@ import { environment } from 'src/renderer/environments/environment';
 @Component({
   selector: 'app-welcome-modal',
   templateUrl: './welcome-modal.component.html',
-  imports: [SvgComponent]
+  imports: []
 })
 export class WelcomeModalComponent {
   private settingsService = inject(SettingsService);

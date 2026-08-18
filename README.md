@@ -14,11 +14,21 @@ All credit for the original design, features, and codebase goes to the [Mockoon 
 - OpenAPI compatibility
 - Request logging, JSON templating, proxy forwarding, HTTPS support
 
+## Documentation
+
+In-app links (docs, tutorials, CLI reference) point to
+[mockoon.com](https://mockoon.com/docs/latest/about/). That's intentional,
+not an oversight: this fork didn't change the mocking engine, route
+configuration, or CLI behavior, so Mockoon's own documentation is accurate
+for Mockuuu too. Writing a parallel copy would just be the same content
+maintained twice — this only changes if the underlying behavior ever
+diverges from upstream.
+
 ## Monorepo layout
 
 This project uses NPM workspaces, with packages under `./packages/`:
 
-- `app`: the desktop/web application
+- `app`: the desktop application
 - `cli`: the command-line interface
 - `commons` / `commons-server`: shared libraries
 - `cloud`: cloud sync types/utils

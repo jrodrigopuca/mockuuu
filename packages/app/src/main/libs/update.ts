@@ -1,6 +1,11 @@
 import { spawn } from 'child_process';
+import { createHash } from 'crypto';
 import { app, BrowserWindow, shell } from 'electron';
-import { createWriteStream, promises as fsPromises } from 'fs';
+import {
+  createReadStream,
+  createWriteStream,
+  promises as fsPromises
+} from 'fs';
 import { join as pathJoin } from 'path';
 import { gt as semverGt } from 'semver';
 import { Config } from 'src/main/config';
@@ -25,6 +30,66 @@ const notifyUpdate = (mainWindow: BrowserWindow, version: string) => {
   mainWindow.webContents.once('did-finish-load', () => {
     mainWindow.webContents.send('APP_UPDATE_AVAILABLE', version);
   });
+};
+
+/**
+ * Verify a downloaded update binary against this release's published
+ * SHA256SUMS.txt before it's ever executed. HTTPS only guarantees the
+ * transport wasn't tampered with in transit — it says nothing about
+ * whether the file at the other end is the one that was actually built
+ * and released, so this is the integrity check that closes that gap.
+ */
+const verifyChecksum = async (
+  filePath: string,
+  binaryFilename: string,
+  version: string
+): Promise<boolean> => {
+  let checksumsText: string;
+
+  try {
+    const response = await fetch(
+      `${Config.githubBinaryURL}v${version}/SHA256SUMS.txt`
+    );
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    checksumsText = await response.text();
+  } catch (error: any) {
+    logError(`[MAIN][UPDATE] Error fetching checksums: ${error.message}`);
+
+    return false;
+  }
+
+  const checksumLine = checksumsText
+    .split('\n')
+    .find((line) => line.trim().endsWith(binaryFilename));
+
+  if (!checksumLine) {
+    logError(`[MAIN][UPDATE] No checksum entry found for ${binaryFilename}`);
+
+    return false;
+  }
+
+  const expectedHash = checksumLine.trim().split(/\s+/)[0].toLowerCase();
+  const hash = createHash('sha256');
+
+  for await (const chunk of createReadStream(filePath)) {
+    hash.update(chunk);
+  }
+
+  const actualHash = hash.digest('hex');
+
+  if (expectedHash !== actualHash) {
+    logError(
+      `[MAIN][UPDATE] Checksum mismatch for ${binaryFilename}: expected ${expectedHash}, got ${actualHash}`
+    );
+
+    return false;
+  }
+
+  return true;
 };
 
 export const checkForUpdate = async (mainWindow: BrowserWindow) => {
@@ -66,14 +131,32 @@ export const checkForUpdate = async (mainWindow: BrowserWindow) => {
       const binaryFilename = `mockoon.setup.${latestVersion}.exe`;
       const updateFilePath = pathJoin(userDataPath, binaryFilename);
 
+      let alreadyDownloaded = false;
+
       try {
         await fsPromises.access(updateFilePath);
-        logInfo('[MAIN][UPDATE] Binary file already downloaded');
-        notifyUpdate(mainWindow, latestVersion);
-        updateAvailableVersion = latestVersion;
-
-        return;
+        alreadyDownloaded = true;
       } catch (_error) {}
+
+      if (alreadyDownloaded) {
+        logInfo(
+          '[MAIN][UPDATE] Binary file already downloaded, verifying checksum'
+        );
+
+        if (
+          await verifyChecksum(updateFilePath, binaryFilename, latestVersion)
+        ) {
+          notifyUpdate(mainWindow, latestVersion);
+          updateAvailableVersion = latestVersion;
+
+          return;
+        }
+
+        logError(
+          '[MAIN][UPDATE] Existing download failed checksum verification, re-downloading'
+        );
+        await fsPromises.unlink(updateFilePath).catch(() => {});
+      }
 
       logInfo('[MAIN][UPDATE] Downloading binary file');
 
@@ -91,6 +174,21 @@ export const checkForUpdate = async (mainWindow: BrowserWindow) => {
             createWriteStream(updateFilePath)
           )
         );
+
+        logInfo(
+          '[MAIN][UPDATE] Binary file downloaded, verifying checksum'
+        );
+
+        if (
+          !(await verifyChecksum(updateFilePath, binaryFilename, latestVersion))
+        ) {
+          logError(
+            '[MAIN][UPDATE] Downloaded binary failed checksum verification, aborting update'
+          );
+          await fsPromises.unlink(updateFilePath).catch(() => {});
+
+          return;
+        }
 
         logInfo('[MAIN][UPDATE] Binary file ready');
         notifyUpdate(mainWindow, latestVersion);
