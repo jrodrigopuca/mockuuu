@@ -3,7 +3,7 @@
  * @see https://www.electron.build/configuration/configuration
  */
 const config = {
-  appId: 'com.mockoon.app',
+  appId: 'com.jrodrigopuca.mockuuu',
   productName: 'Mockuuu',
   extraMetadata: { name: 'mockoon' },
   directories: {

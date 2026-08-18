@@ -58,11 +58,13 @@ jobs:
     environment: production
     timeout-minutes: 60
 
-    # Unsigned build: this fork has no Apple Developer ID / notarization credentials
-    # (those belong to the upstream Mockoon team), so signing/notarization is skipped.
-    # Users installing the resulting dmg will see a Gatekeeper warning on first launch.
     env:
-      CSC_IDENTITY_AUTO_DISCOVERY: false
+      APPLEID: ${{secrets.APPLEID}}
+      TEAMID: ${{secrets.TEAMID}}
+      APPLEIDPASS: ${{secrets.APPLEIDPASS}}
+      ASCPROVIDER: ${{secrets.ASCPROVIDER}}
+      CSC_LINK: ${{secrets.MACOS_CSC_LINK}}
+      CSC_KEY_PASSWORD: ${{secrets.MACOS_CSC_KEY_PASSWORD}}
       USE_HARD_LINKS: false
 
     steps:
@@ -91,7 +93,12 @@ jobs:
         run: |
           npm run build:libs
           npm run build:desktop:prod
-          npm run package:desktop:mac:unsigned
+          npm run package:desktop:mac
+      - name: Verify notarization
+        run: |
+          codesign --verify --deep --strict --verbose=2 ./packages/app/packages/mac/Mockuuu.app
+          codesign --verify --deep --strict --verbose=2 ./packages/app/packages/mac-arm64/Mockuuu.app
+          codesign --verify --deep --strict --verbose=2 ./packages/app/packages/mac-universal/Mockuuu.app
       - name: Get dmg binaries shasum
         run: |
           shasum -a 256 ./packages/app/packages/mockoon.setup.*.arm64.dmg

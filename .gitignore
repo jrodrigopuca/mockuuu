@@ -54,3 +54,6 @@ MACOS_SIGNING.md
 
 # env files
 .env*
+
+# local secrets, never commit
+credentials.txt
