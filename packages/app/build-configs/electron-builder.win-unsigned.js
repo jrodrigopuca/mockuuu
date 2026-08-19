@@ -12,10 +12,10 @@ const config = Object.assign({}, commonConfig, {
     target: [{ target: 'nsis' }, { target: 'portable' }]
   },
   nsis: {
-    artifactName: 'mockoon.setup.${version}.${ext}'
+    artifactName: 'mockuuu.setup.${version}.${ext}'
   },
   portable: {
-    artifactName: 'mockoon.portable.${version}.${ext}'
+    artifactName: 'mockuuu.portable.${version}.${ext}'
   }
 });
 

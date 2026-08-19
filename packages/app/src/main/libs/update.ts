@@ -102,7 +102,7 @@ export const checkForUpdate = async (mainWindow: BrowserWindow) => {
   try {
     // try to remove existing old update
     await fsPromises.unlink(
-      pathJoin(userDataPath, `mockoon.setup.${Config.appVersion}.exe`)
+      pathJoin(userDataPath, `mockuuu.setup.${Config.appVersion}.exe`)
     );
     logInfo('[MAIN][UPDATE] Removed old update file');
   } catch (_error) {}
@@ -128,7 +128,7 @@ export const checkForUpdate = async (mainWindow: BrowserWindow) => {
     logInfo(`[MAIN][UPDATE] Found a new version v${latestVersion}`);
 
     if (process.platform === 'win32' && isNotPortable) {
-      const binaryFilename = `mockoon.setup.${latestVersion}.exe`;
+      const binaryFilename = `mockuuu.setup.${latestVersion}.exe`;
       const updateFilePath = pathJoin(userDataPath, binaryFilename);
 
       let alreadyDownloaded = false;
@@ -211,7 +211,7 @@ export const applyUpdate = () => {
   if (updateAvailableVersion) {
     if (process.platform === 'win32' && isNotPortable) {
       spawn(
-        pathJoin(userDataPath, `mockoon.setup.${updateAvailableVersion}.exe`),
+        pathJoin(userDataPath, `mockuuu.setup.${updateAvailableVersion}.exe`),
         ['--updated'],
         {
           detached: true,

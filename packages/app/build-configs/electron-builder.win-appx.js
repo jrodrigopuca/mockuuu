@@ -21,7 +21,7 @@ const config = Object.assign({}, commonConfig, {
     identityName: 'jrodrigopuca.mockuuu',
     applicationId: 'mockuuu',
     backgroundColor: '#ffffff',
-    artifactName: 'mockoon.${version}.${ext}'
+    artifactName: 'mockuuu.${version}.${ext}'
   }
 });
 

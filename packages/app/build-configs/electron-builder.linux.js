@@ -6,7 +6,7 @@ const commonConfig = require('./electron-builder.common');
  */
 const config = Object.assign({}, commonConfig, {
   linux: {
-    executableName: 'mockoon',
+    executableName: 'mockuuu',
     syncDesktopName: true,
     target: [
       {
@@ -28,7 +28,7 @@ const config = Object.assign({}, commonConfig, {
     ],
     category: 'Development',
     icon: 'build-res',
-    artifactName: 'mockoon-${version}.${arch}.${ext}',
+    artifactName: 'mockuuu-${version}.${arch}.${ext}',
     desktop: {
       entry: {
         Name: 'Mockuuu',
